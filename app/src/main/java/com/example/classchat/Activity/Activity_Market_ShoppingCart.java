@@ -45,7 +45,6 @@ public class Activity_Market_ShoppingCart extends Activity implements View.OnCli
 
     private ImageButton ibShopcartBack;
     private TextView tvShopcartEdit;
-    private RecyclerView recyclerview;
     private CheckBox checkboxAll;
     private TextView tvShopcartTotal;
     private LinearLayout ll_check_all;
@@ -87,7 +86,6 @@ public class Activity_Market_ShoppingCart extends Activity implements View.OnCli
          */
         ibShopcartBack = findViewById(R.id.ib_shopcart_back);
         tvShopcartEdit = findViewById(R.id.tv_shoppingcart_edit);
-        recyclerview = findViewById(R.id.recyclerview);
         checkboxAll = findViewById(R.id.checkbox_all);
         tvShopcartTotal = findViewById(R.id.tv_shopcart_total);
         btnCheckOut = findViewById(R.id.btn_check_out);
@@ -98,7 +96,7 @@ public class Activity_Market_ShoppingCart extends Activity implements View.OnCli
         ll_empty_shopcart = findViewById(R.id.ll_empty_shopcart);
         tv_empty_cart_tobuy = findViewById(R.id.tv_empty_cart_tobuy);
         mPullLoadMoreRecyclerView = findViewById(R.id.pullLoadMoreRecyclerView);
-
+        mPullLoadMoreRecyclerView.setPushRefreshEnable(false);
 //        count_add = findViewById(R.id.count_add);
 //        count_sub = findViewById(R.id.count_sub);
 //        item_count = findViewById(R.id.item_count);
@@ -249,6 +247,7 @@ public class Activity_Market_ShoppingCart extends Activity implements View.OnCli
             ll_empty_shopcart.setVisibility(View.GONE);
             ll_check_all.setVisibility(View.VISIBLE);
         } else {
+            Log.e("empty shopping cart", "yes");
             ll_empty_shopcart.setVisibility(View.VISIBLE);
             tvShopcartEdit.setVisibility(View.GONE);
             ll_check_all.setVisibility(View.GONE);
@@ -270,11 +269,13 @@ public class Activity_Market_ShoppingCart extends Activity implements View.OnCli
         /**
          * 数据传输
          */
-        if(!information.equals("error") && !information.equals("[{}]")){
+        if(!information.equals("error") && !information.equals("[{}]") && !information.equals("[]")){
+            Log.e("里面有东西",datas.toString());
             List<Object_Pre_Sale> commodityList = JSON.parseObject(information , new TypeReference<List<Object_Pre_Sale>>(){});
             for (int i = 0 ; i < commodityList.size() ; i++){
                 datas.add(commodityList.get(i));
             }
+            Log.e("datas", datas.toString());
 
             // 虚拟数据
             // makeData();
@@ -285,25 +286,19 @@ public class Activity_Market_ShoppingCart extends Activity implements View.OnCli
                 tvShopcartEdit.setVisibility(View.VISIBLE);
                 ll_empty_shopcart.setVisibility(View.GONE);
                 adapter = new Adapter_ShoppingCart(this, datas, tvShopcartTotal, checkboxAll, cb_all);
-                recyclerview.setLayoutManager(new LinearLayoutManager(this));
-                recyclerview.setAdapter(adapter);
                 adapter.setOnItemClickListener(MyItemClickListener);
                 mPullLoadMoreRecyclerView.setGridLayout(1);
                 mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        mPullLoadMoreRecyclerView.setPushRefreshEnable(true);
-                        mPullLoadMoreRecyclerView.setFooterViewText("下拉刷新");
-                        mPullLoadMoreRecyclerView.setFooterViewTextColor(R.color.black);
+                        //TODO 发请求检查更新
                         adapter.notifyDataSetChanged();
                         Util_ToastUtils.showToast(Activity_Market_ShoppingCart.this, "刷新成功");
                         mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
                     }
 
                     @Override
-                    public void onLoadMore() {
-                        mPullLoadMoreRecyclerView.setPullRefreshEnable(false);
-                    }
+                    public void onLoadMore() {}
                 });
                 mPullLoadMoreRecyclerView.setAdapter(adapter);
             } else {
@@ -358,8 +353,10 @@ public class Activity_Market_ShoppingCart extends Activity implements View.OnCli
                     int max = getStorageNumber(datas.get(position).getItemId());
                     if (count_temp < max){
                         datas.get(position).setNum(count_temp + 1);
+                        adapter.showTotalPrice();
                         adapter.notifyItemChanged(position, R.id.item_count);
                         data_changed(position);
+
                     }else{
                         Util_ToastUtils.showToast(Activity_Market_ShoppingCart.this, "警告：超过库存");
                     }
@@ -368,6 +365,7 @@ public class Activity_Market_ShoppingCart extends Activity implements View.OnCli
                     int count_temp1 = datas.get(position).getNum();
                         if (count_temp1 > 1){
                         datas.get(position).setNum(count_temp1 - 1);
+                        adapter.showTotalPrice();
                         adapter.notifyItemChanged(position, R.id.item_count);
                         data_changed(position);
                     }else {
@@ -438,7 +436,7 @@ public class Activity_Market_ShoppingCart extends Activity implements View.OnCli
      * @return
      */
     private int getStorageNumber(String itemID){
-        int number = Integer.parseInt(itemID);
+        int number = 100;
 //        int number = 0;
         return number;
     }

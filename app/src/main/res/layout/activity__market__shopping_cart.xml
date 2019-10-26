@@ -12,8 +12,6 @@
     >
 
     <LinearLayout style="@style/top_nav">
-
-
         <ImageButton
             android:id="@+id/ib_shopcart_back"
             android:layout_width="30dp"
@@ -42,13 +40,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#fff" />
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/pullLoadMoreRecyclerView"
@@ -130,28 +123,44 @@
             android:orientation="horizontal"
             android:visibility="gone">
 
-            <CheckBox
-                android:id="@+id/cb_all"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableLeft="@drawable/xml_checkbox_selector"
-                android:drawablePadding="10dp"
-                android:padding="10dp"
-                android:paddingLeft="0dp"
-                android:text="全选"
-                android:textColor="#303235"
-                android:textSize="15sp" />
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/cb_all"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:button="@null"
+                    android:scaleX="0.4"
+                    android:scaleY="0.4"
+                    android:drawableLeft="@drawable/xml_checkbox_selector"
+                    android:textColor="#303235"
+                    android:textSize="20sp"  />
 
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#ed3f3f"
-                android:text="删除"
-                android:textColor="#fff" />
+                <TextView
+                    android:layout_toRightOf="@+id/cb_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:text="全选"
+                    android:textColor="#303235"
+                    android:textSize="12sp" />
+
+
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#ed3f3f"
+                    android:text="删除"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#fff" />
+            </RelativeLayout>
+
 
         </LinearLayout>
 </LinearLayout>

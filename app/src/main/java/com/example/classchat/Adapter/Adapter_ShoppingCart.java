@@ -132,7 +132,8 @@ public class Adapter_ShoppingCart extends RecyclerView.Adapter<RecyclerView.View
      */
     @Override
     public int getItemCount() {
-        if (datas != null){
+        if (datas != null && datas.size() > 0){
+            Log.e("size", datas.size() + "");
             return datas.size();
         }else {
             return 0;
@@ -442,7 +443,7 @@ public class Adapter_ShoppingCart extends RecyclerView.Adapter<RecyclerView.View
      * @return
      */
     private int getStorageNumber(String itemID){
-        int number = Integer.parseInt(itemID);
+        int number = 100;
 //        int number = 0;
         return number;
 

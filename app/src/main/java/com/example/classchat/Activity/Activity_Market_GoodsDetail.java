@@ -181,7 +181,7 @@ public class Activity_Market_GoodsDetail extends AppCompatActivity{
     public void toShoppingChart(View view) {
         startActivity(new Intent(Activity_Market_GoodsDetail.this, Activity_Market_ShoppingCart.class));
     }
-
+//hmm
     public void addToShoppingCart(View view) {
         //TODO 添加商品到购物车
         List<String>paramList = new ArrayList<>();
@@ -202,8 +202,12 @@ public class Activity_Market_GoodsDetail extends AppCompatActivity{
 //                break;
 //        }
 
+        //TODO
+//        Object_Pre_Sale object_pre_sale = new Object_Pre_Sale(object_item_detail.getItem().getName(), object_item_detail.getItem().getId(),
+//                paramList, num, detailPrice[0], JSON.parseArray(object_item_detail.getItem().getImg_list_1(), String.class).get(0));
+
         Object_Pre_Sale object_pre_sale = new Object_Pre_Sale(object_item_detail.getItem().getName(), object_item_detail.getItem().getId(),
-                paramList, num, detailPrice[0], Collections.singletonList(object_item_detail.getItem().getImg_list_1()).get(0));
+                paramList, num, (float) 34.55, JSON.parseArray(object_item_detail.getItem().getImg_list_1(), String.class).get(0));
 
         SharedPreferences sp = getSharedPreferences("shopping_cart_cache" , MODE_MULTI_PROCESS);
         String jsonString = sp.getString("cart_information","error");
@@ -221,20 +225,24 @@ public class Activity_Market_GoodsDetail extends AppCompatActivity{
                 // 如果它们的规格列表size是一样的，那就判断规格列表是不是一样的
                 if ( commodityList.get(i).getParamList().size() == object_pre_sale.getParamList().size() ){
                     for (int j = 0; j < object_pre_sale.getParamList().size(); j++) {
-                        if (object_pre_sale.getParamList().get(j) != commodityList.get(i).getParamList().get(j)) {
+                        if ( !object_pre_sale.getParamList().get(j).equals(commodityList.get(i).getParamList().get(j))) {
                             temp_judge = false; // 只要有一个不一样，就设置成false
                         }
                     }
                 }
+
                 // 如果规格和itemID都一样，就直接让数量加1就好了
                 if (object_pre_sale.getItemId().equals(commodityList.get(i).getItemId()) && temp_judge == true) {
                     // 让和其一样的购物车对象的数量+1
                     int count = commodityList.get(i).getNum();
-                    commodityList.get(i).setNum(count++);
+                    count += 1;
+                    Log.e("num", count + "");
+                    commodityList.get(i).setNum(count);
                     tag = true; // 把tag设置成true，表示有一个相同的东西已经在购物车里面了
                     break; // 跳出循环
                 }
             }
+
             // 如果没有重复的，就加进去，然后重新加入缓存；如果有重复的，就直接重新加入缓存就好了
             if ( tag == false ){
                 commodityList.add(object_pre_sale);
