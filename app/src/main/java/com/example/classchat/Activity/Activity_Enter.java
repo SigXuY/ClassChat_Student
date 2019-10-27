@@ -17,6 +17,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,6 +35,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.classchat.R;
 import com.example.classchat.Util.NetBroadcastReceiver;
+import com.example.classchat.Util.SharedPreferencesUtil;
 import com.example.classchat.Util.Util_NetState;
 import com.example.classchat.Util.Util_NetUtil;
 import com.example.classchat.Util.Util_ToastUtils;
@@ -69,6 +71,7 @@ public class Activity_Enter extends AppCompatActivity implements View.OnClickLis
     //设置登录成功或失败的常量
     private static final int LOGIN_FAILED = 0;
     private static final int LOGIN_SUCCESS = 1;
+    private static final int STATUS_TRUE = 2;
 
     // 登录时就返回必须的数据，这里先定义好
     private boolean isAuthentation;
@@ -82,11 +85,14 @@ public class Activity_Enter extends AppCompatActivity implements View.OnClickLis
     // 声明一个数组permissions，将需要的权限都放在里面
     String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
     Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_NETWORK_STATE, Manifest.permission.ACCESS_NETWORK_STATE,
-    Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE};
+    Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_NOTIFICATION_POLICY};
     // 创建一个mPermissionList，逐个判断哪些权限未授予，未授予的权限存储到mPermissionList中
     List<String> mPermissionList = new ArrayList<>();
 
     final int mFirstRequestCode = 100;//权限请求码
+
+    // 广播发射器
+    private LocalBroadcastManager localBroadcastManager;
 
     /*
     设置handler接收网络线程的信号并处理
@@ -122,12 +128,46 @@ public class Activity_Enter extends AppCompatActivity implements View.OnClickLis
                     intent.putExtra("headUrl", headUrl);
                     loadingForLogin.dismiss();
                     startActivity(intent);
+                    getAuthentationStatus(editPerson.getText().toString());
                     finish();
                     break;
+                case STATUS_TRUE:
+                    Intent intent1 = new Intent("com.example.theclasschat_UPDATE_ACCOUNTINFO");
+                    localBroadcastManager.sendBroadcast(intent1);
+                    Intent intent2 = new Intent("com.example.broadcasttest.UPDATE_STATE");
+                    localBroadcastManager.sendBroadcast(intent2);
+                    break;
                 default:
+                    break;
             }
         }
     };
+
+    private void getAuthentationStatus(String userId) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("username", userId)
+                .build();
+
+        Util_NetUtil.sendOKHTTPRequest("http://106.12.105.160:8081/getauthentationstatus", requestBody, new okhttp3.Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        // 得到服务器返回的具体内容
+                        Message message = new Message();
+                        String responsedata = response.body().string();
+
+                        if(Boolean.parseBoolean(responsedata)){
+                            message.what = STATUS_TRUE;
+                            handler.sendMessage(message);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        // 在这里对异常情况进行处理
+                    }
+
+        });
+    }
 
     /*
     重写活动启动方法
@@ -135,6 +175,7 @@ public class Activity_Enter extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity__enter);
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
@@ -148,6 +189,8 @@ public class Activity_Enter extends AppCompatActivity implements View.OnClickLis
         init(); // 初始化各控件
         //getUserInfo(); // 取出储存好的用户信息
 
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+
         event = this;
         //实例化IntentFilter对象
         IntentFilter filter = new IntentFilter();
@@ -157,9 +200,6 @@ public class Activity_Enter extends AppCompatActivity implements View.OnClickLis
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         netBroadcastReceiver = new NetBroadcastReceiver();
         registerReceiver(netBroadcastReceiver, filter);
-
-
-
     }
 
     /*
@@ -359,7 +399,6 @@ public class Activity_Enter extends AppCompatActivity implements View.OnClickLis
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(netBroadcastReceiver);
-
     }
 
 

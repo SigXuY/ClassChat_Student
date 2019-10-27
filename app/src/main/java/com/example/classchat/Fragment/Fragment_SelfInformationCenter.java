@@ -25,13 +25,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v4.provider.DocumentFile;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -49,9 +53,13 @@ import com.example.classchat.Activity.Activity_IdAuthentation;
 import com.example.classchat.Activity.Activity_MyCourse;
 import com.example.classchat.Activity.Activity_Option;
 import com.example.classchat.Activity.MainActivity;
+import com.example.classchat.Object.Object_TodoList;
+import com.example.classchat.Object.Object_Todo_Broadcast_container;
 import com.example.classchat.R;
+import com.example.classchat.Util.AlarmTimer;
 import com.example.classchat.Util.Util_NetUtil;
 import com.example.classchat.Util.Util_ToastUtils;
+import com.example.library_cache.Cache;
 import com.maning.updatelibrary.InstallUtils;
 import com.yzq.zxinglibrary.encode.CodeCreator;
 
@@ -59,6 +67,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -87,6 +97,7 @@ public class Fragment_SelfInformationCenter extends Fragment {
     private LinearLayout linearLayoutforGuanyu;
     private LinearLayout linearLayoutforUpdate;
     private LinearLayout linearLayoutQuit;
+    private LinearLayout linearLayout_user_manual;
     private TextView textViewforName;
     private TextView textViewforId;
 
@@ -103,6 +114,11 @@ public class Fragment_SelfInformationCenter extends Fragment {
     //  private Context context;
     private String downloadUrl;
     private final static int UPDATE = 100;
+
+    private ImageButton guideButton; // 指引按键
+
+    // 搞一个自己的变量
+    Fragment_SelfInformationCenter myContext = this;
 
     //handler处理反应回来的信息
     @SuppressLint("HandlerLeak")
@@ -142,6 +158,9 @@ public class Fragment_SelfInformationCenter extends Fragment {
         textViewforId = view.findViewById(R.id.user_stuID);
         textViewforName = view.findViewById(R.id.user_name);
 
+        guideButton = view.findViewById(R.id.btn_guide_me);
+
+        linearLayout_user_manual = view.findViewById(R.id.user_manual);
 
         //获得用户ID
         MainActivity activity = (MainActivity) getActivity();
@@ -237,6 +256,14 @@ public class Fragment_SelfInformationCenter extends Fragment {
                 }
             }
         });
+
+        linearLayout_user_manual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                show_guide_dialog();
+            }
+        });
+
         linearLayoutQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -252,6 +279,9 @@ public class Fragment_SelfInformationCenter extends Fragment {
                                 setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Cache.with(myContext.getActivity())
+                                        .path(getCacheDir(myContext.getActivity()))
+                                        .remove("classBox");
                                 // 这里不应该只是一个简单的页面跳转
                                 Intent outIntent = new Intent(getActivity(),
                                         Activity_Enter.class);
@@ -287,6 +317,16 @@ public class Fragment_SelfInformationCenter extends Fragment {
             }
         });
 
+        /**
+         * 指引的点击事件
+         */
+        guideButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                show_guide_dialog();
+            }
+        });
+
 
     }
 
@@ -297,6 +337,27 @@ public class Fragment_SelfInformationCenter extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+    }
+
+    Dialog dialog1;
+    private void show_guide_dialog() {
+        // 自定义对话框
+        LayoutInflater inflater= LayoutInflater.from(getContext());
+        View myView = inflater.inflate(R.layout.dialog_guide_me,null);//引用自定义布局
+//        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
+//        builder.setView(myView);
+//        dialog = builder.create();  //创建对话框
+        dialog1 = new Dialog(getActivity(),R.style.dialog);
+        dialog1.setContentView(myView);
+        dialog1.show();  //显示对话框
+
+        Window dialogWindow = dialog1.getWindow();
+        WindowManager m = getActivity().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高度
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.7); // 高度设置为屏幕的0.6，根据实际情况调整
+        p.width = (int) (d.getWidth() * 0.7); // 宽度设置为屏幕的0.65，根据实际情况调整
+        dialogWindow.setAttributes(p);
     }
 
     /*
@@ -472,7 +533,6 @@ public class Fragment_SelfInformationCenter extends Fragment {
             }
         });
         progressBar = myView.findViewById(R.id.download_progress);
-//        cancelDownload = myView.findViewById(R.id.cancelDownload);
     }
 
     private void initCallBack() {
@@ -576,8 +636,6 @@ public class Fragment_SelfInformationCenter extends Fragment {
      * download函数
      */
     private void download() {
-
-
         InstallUtils.with(getContext())
                 //必须-下载地址
                 .setApkUrl(downloadUrl)
@@ -590,8 +648,35 @@ public class Fragment_SelfInformationCenter extends Fragment {
 
     }
 
+    /**
+     *  退出登陆的时候删除所有的闹钟
+     */
+    private void deteleAllAlarm(){
 
+        // 闹钟缓存的数组
+        List<String> alarm = new ArrayList<>();
+        Log.e("deleteAlarm", "start");
+        for(int i = 0; i < alarm.size() ; i++){
+            Object_Todo_Broadcast_container obj = JSON.parseObject(alarm.get(i), Object_Todo_Broadcast_container.class);
+            AlarmTimer alarmTimer = new AlarmTimer(obj);
+            alarmTimer.cancelAlarmTimer(getContext());
+            Log.e("delete_id", obj.getId() + "");
+        }
+    }
 
+    /*
+     * 获得缓存地址
+     * */
+    public String getCacheDir(Context context) {
+        String cachePath;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            cachePath = context.getExternalCacheDir().getPath();
+        } else {
+            cachePath = context.getCacheDir().getPath();
+        }
+        return cachePath;
+    }
 }
 
 

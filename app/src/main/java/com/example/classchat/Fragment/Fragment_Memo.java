@@ -237,10 +237,17 @@ public class Fragment_Memo extends Fragment {
                     .listener(new OnBMClickListener() {
                         @Override
                         public void onBoomButtonClick(int index) {
+                            //获取本周周次week
+                            mBeginClassTime = Cache.with(getActivity())
+                                    .path(getCacheDir(getActivity()))
+                                    .getCache("BeginClassTime",String.class);
+
                             Intent intent = new Intent(getActivity(),Activity_AddTodo.class);
                             Bundle bundle = new Bundle();
                             bundle.putString("timeslot", index+"");
                             bundle.putString("userId", userId);
+                            bundle.putString("begin_time", mBeginClassTime);
+
                             intent.putExtras(bundle);
                             getActivity().startActivity(intent);
                         }
@@ -345,10 +352,9 @@ public class Fragment_Memo extends Fragment {
                 }
 
                 try {
-
                     city = deleteString0(two.get("city").toString(),'市');
                     district =deleteString0( two.get("district").toString(),'区');
-                } catch (org.json.JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -585,7 +591,7 @@ public class Fragment_Memo extends Fragment {
                 .getCache("BeginClassTime",String.class);
         //若用户没有设置初始时间
         if(mBeginClassTime == null || mBeginClassTime.length() <= 0){
-            mBeginClassTime = getDate(distanceDay) + " 00:00:00";
+            mBeginClassTime= "2019-08-26 00:00:00";
         }
         int week = timeTransfrom(mBeginClassTime);
         int day = calendar.get(Calendar.DAY_OF_WEEK);

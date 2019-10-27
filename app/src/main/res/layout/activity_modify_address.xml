@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#eee"
+    android:layout_height="match_parent">
+    <LinearLayout
+        style="@style/top_nav">
+        <ImageView
+            android:id="@+id/back_modify_address"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:src="@drawable/ico_left_back"
+            android:padding="8dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="添加收货地址"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/modify_address_save"
+            android:layout_width="0dip"
+            android:layout_weight="0.15"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="保存"
+            android:textSize="16sp"
+            android:background="@null"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_height="50dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/head"
+            android:layout_gravity="center_vertical"
+            android:layout_height="30dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:hint="收货人"
+            android:id="@+id/modify_address_name"
+            android:gravity="center_vertical"
+            android:textColor="#444"
+            android:textSize="18dp"
+            android:background="#fff"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_marginTop="2dp"
+        android:layout_height="50dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/phone"
+            android:layout_gravity="center_vertical"
+            android:layout_height="30dp" />
+
+        <EditText
+            android:id="@+id/modify_address_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:textSize="18dp"
+            android:hint="手机号码"
+            android:inputType="phone|number"
+            android:maxLength="11"
+            android:gravity="center_vertical"
+            android:textColor="#444"
+            android:background="#fff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#444"
+            android:text="楼栋"
+            android:gravity="center"
+            android:textSize="18sp"/>
+        <Spinner
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/modify_address_detail"
+            android:spinnerMode="dropdown"
+            android:layout_height="match_parent">
+
+        </Spinner>
+
+    </LinearLayout>
+
+
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:background="#fff"-->
+        <!--android:layout_marginTop="2dp"-->
+        <!--android:fillViewport="true"-->
+        <!--android:layout_height="90dp">-->
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:padding="10dp"-->
+            <!--android:background="#fff"-->
+            <!--android:gravity="top"-->
+            <!--android:id="@+id/modify_adress_detail"-->
+            <!--android:textSize="15sp"-->
+            <!--android:hint="详细地址：如楼栋号等等"-->
+            <!--android:layout_height="match_parent" />-->
+
+    <!--</ScrollView>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_marginTop="20dp"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#444"
+            android:text="设为默认地址"
+            android:layout_height="match_parent" />
+        <Switch
+            android:layout_marginRight="10dp"
+            android:id="@+id/modify_address_defaut_check"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:id="@+id/delete_address"
+        android:layout_marginTop="20dp"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#E9395B"
+            android:text="删除收货地址"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+</LinearLayout>

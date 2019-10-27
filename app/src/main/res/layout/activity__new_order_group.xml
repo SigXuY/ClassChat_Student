@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#F7F7F7"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Activity_NewOrder">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#AA00D8A0"
+        android:layout_height="50dp">
+        <Button
+            android:layout_width="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/back_newOrder_group"
+            android:background="@drawable/ico_left_back"
+            android:layout_height="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="提交订单"
+            android:textSize="15sp"
+            android:layout_centerInParent="true"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_radius_white"
+            android:layout_height="80dp">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/dingwei"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="0dp">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:text="许跃缤"
+                        android:id="@+id/name_newOrder_group"
+                        android:textColor="#000"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:text="13417157822"
+                        android:id="@+id/phone_newOrder_group"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:layout_weight="3"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/location_newOrder_group"
+                    android:text="广东省广州市番禺区小谷围街道广州大学城华南理工大学"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:layout_height="0dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="一次结算"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_height="wrap_content" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ListView
+                android:layout_width="match_parent"
+                android:id="@+id/list_preSale"
+                android:layout_height="wrap_content">
+
+            </ListView>
+        </ScrollView>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_height="50dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/numOfitem_newOrder_group"
+            android:padding="5dp"
+            android:text="结算1件 合计："
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/price_newOrder_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="18sp"
+            android:textColor="#FF9955"
+            android:gravity="center"
+            android:text="￥129.00" />
+        <Button
+            android:layout_width="wrap_content"
+            android:background="@drawable/green_bg"
+            android:text="购买"
+            android:id="@+id/buy_newOrder_group"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="#fff"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+</LinearLayout>
