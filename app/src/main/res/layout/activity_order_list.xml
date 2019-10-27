@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    android:orientation="vertical"
+    tools:context=".Activity.Activity_OrderList">
+    <LinearLayout
+        style="@style/top_nav">
+        <ImageView
+            android:id="@+id/back_orderList"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:src="@drawable/ico_left_back"
+            android:padding="8dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="我的订单"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/address_save"
+            android:layout_width="0dip"
+            android:layout_weight="0.15"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:background="@null"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textColor="#808080"
+        android:visibility="gone"
+        android:id="@+id/hint_orderList"
+        android:textSize="18sp"
+        android:text="暂无订单哦~"
+        android:layout_height="match_parent" />
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/orderList"
+        android:layout_height="wrap_content">
+    </ListView>
+
+</LinearLayout>

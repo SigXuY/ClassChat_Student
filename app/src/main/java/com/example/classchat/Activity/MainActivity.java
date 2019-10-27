@@ -31,6 +31,7 @@ import com.example.classchat.Fragment.Fragment_Market;
 import com.example.classchat.Fragment.Fragment_Memo;
 import com.example.classchat.Fragment.Fragment_SelfInformationCenter;
 import com.example.classchat.R;
+import com.example.classchat.Util.DataHolder;
 import com.example.classchat.Util.MyConversationClickListener;
 import com.example.classchat.Util.Util_NetUtil;
 import com.example.classchat.Util.Util_ToastUtils;
@@ -176,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Log.d(TAG, "onCreate: "+ sHA1(MainActivity.this));
         correctId = intent.getStringExtra("userId");
+        DataHolder.setUserId(correctId);
         isAuthentation = intent.getBooleanExtra("userAuthentationStatus", false);
         nickName = intent.getStringExtra("userName");
         imageUrl = intent.getStringExtra("userImage");

@@ -1,10 +1,15 @@
 package com.example.classchat.Object;
 
-public class Object_Order {
+import java.io.Serializable;
+
+public class Object_Order implements Serializable {
     //订单id
     private String order_id;
     //购买人id
     private String buyer_id;
+
+
+
     //货物信息
     private Object_Pre_Sale item;
     //收货地址详情
@@ -13,17 +18,18 @@ public class Object_Order {
     private int state = 0;
     //订单时间
     private String generatetime;
+
     //总价
     private float sumprice;
 
-    public Object_Order(String order_id, String buyer_id, Object_Pre_Sale item, Object_Adress adress,  String generatetime, float sumprice) {
+    public Object_Order(String order_id, String buyer_id, Object_Pre_Sale item, Object_Adress adress,  String generatetime) {
         this.order_id = order_id;
         this.buyer_id = buyer_id;
         this.item = item;
         this.adress = adress;
         this.state = 0;
         this.generatetime = generatetime;
-        this.sumprice = sumprice;
+        this.sumprice = getItem().getPrice()*getItem().getNum();
     }
 
     public float getSumprice() {
@@ -72,6 +78,14 @@ public class Object_Order {
 
     public void setGeneratetime(String generatetime) {
         this.generatetime = generatetime;
+    }
+
+    public Object_Pre_Sale getItem() {
+        return item;
+    }
+
+    public void setItem(Object_Pre_Sale item) {
+        this.item = item;
     }
 
 

@@ -1,11 +1,14 @@
 package com.example.classchat.Object;
 
-public class Object_Adress {
+import java.io.Serializable;
+
+public class Object_Adress implements Serializable {
+    public static int ID = 0;
     //收货人
     private String name;
     //电话
     private String phone;
-    //    //大学
+//    //大学
 //    private String university;
 //    //校区
 //    private String partition;
@@ -14,6 +17,9 @@ public class Object_Adress {
     //是否为默认地址
     private Boolean defaut = true;
 
+
+    private int id;
+
     public Object_Adress(){}
 
     public Object_Adress(String name, String phone, String detail, Boolean defaut) {
@@ -21,6 +27,8 @@ public class Object_Adress {
         this.phone = phone;
         this.detail = detail;
         this.defaut = defaut;
+        ID++;
+        id = ID;
     }
 
 
@@ -39,6 +47,9 @@ public class Object_Adress {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+
+    public int getId() { return id; }
 
 //    public String getUniversity() {
 //        return university;
@@ -75,6 +86,8 @@ public class Object_Adress {
     public String totalAddrss(){
         return "华南理工大学 南校区 "+detail;
     }
+
+
 
 
 }

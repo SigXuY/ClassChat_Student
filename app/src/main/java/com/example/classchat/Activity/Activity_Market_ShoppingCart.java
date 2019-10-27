@@ -43,7 +43,7 @@ import io.rong.imageloader.utils.L;
 
 public class Activity_Market_ShoppingCart extends Activity implements View.OnClickListener {
 
-    private ImageButton ibShopcartBack;
+    private ImageView ibShopcartBack;
     private TextView tvShopcartEdit;
     private CheckBox checkboxAll;
     private TextView tvShopcartTotal;

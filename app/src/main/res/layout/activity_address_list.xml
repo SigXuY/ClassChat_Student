@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    tools:context=".Activity.Activity_AddressList">
+
+    <LinearLayout
+        style="@style/top_nav">
+        <ImageView
+            android:id="@+id/back_addressList"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:src="@drawable/ico_left_back"
+            android:padding="8dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="我的收货地址"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/newaddress"
+            android:layout_width="0dip"
+            android:layout_weight="0.15"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="添加"
+            android:textSize="16sp"
+            android:background="@null"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/address_list"
+        android:layout_height="wrap_content">
+    </ListView>
+
+
+</LinearLayout>

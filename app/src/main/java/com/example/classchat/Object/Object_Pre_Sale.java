@@ -1,8 +1,9 @@
 package com.example.classchat.Object;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Object_Pre_Sale {
+public class Object_Pre_Sale implements Serializable {
 
     public Object_Pre_Sale(String itemName, String itemId, List<String> paramList, int num, float price, String imgurl) {
         this.itemName = itemName;
@@ -90,5 +91,13 @@ public class Object_Pre_Sale {
 
     public void setChildSelected(boolean childSelected) {
         isChildSelected = childSelected;
+    }
+
+    public String getParam(){
+        String param = "";
+        for(int i = 0;i < paramList.size();i++){
+            param += paramList.get(i)+" ";
+        }
+        return param;
     }
 }

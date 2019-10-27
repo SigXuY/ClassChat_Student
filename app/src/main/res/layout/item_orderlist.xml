@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_radius_white"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_margin="5dp"
+            android:id="@+id/img_orderList"
+            android:scaleType="centerCrop"
+            android:layout_height="70dp"
+            android:background="@drawable/ic_new_img_loading_1"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/title_orderList"
+                android:gravity="center"
+                android:text="这是一双好鞋"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="2"
+                android:layout_height="0dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/attribute_orderList"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:text="45码 111  11 "
+                android:ellipsize="end"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="70dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:maxLines="2"
+            android:textStyle="bold"
+            android:id="@+id/price_num_orderList"
+            android:text="￥129.00\n×1"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="40dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+        </View>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/num_orderList"
+            android:text="共1件商品  合计："
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/price_orderList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="12dp"
+            android:gravity="center"
+            android:text="￥129.00" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <Button
+            android:layout_width = "wrap_content"
+            android:id="@+id/order_drawback"
+            android:padding="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/green_bg"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="不想要了"
+            android:textSize="10sp"
+            android:layout_height="match_parent" />
+        <Button
+            android:layout_width = "wrap_content"
+            android:id="@+id/order_evaluate"
+            android:padding="5dp"
+            android:textSize="10sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/green_bg"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="评价"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:textColor="#000"
+            android:textSize="14sp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:id="@+id/order_done_message"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+</LinearLayout>

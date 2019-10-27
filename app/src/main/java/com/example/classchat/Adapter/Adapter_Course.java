@@ -21,12 +21,12 @@ public class Adapter_Course extends RecyclerView.Adapter<Adapter_Course.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView courseName;
-        TextView courseSignTimes;
+//        TextView courseSignTimes;
 
         public ViewHolder(View view) {
             super(view);
             courseName = view.findViewById(R.id.courseitem_coursename);
-            courseSignTimes = view.findViewById(R.id.courseitem_coursesigntimes);
+//            courseSignTimes = view.findViewById(R.id.courseitem_coursesigntimes);
         }
     }
 
@@ -42,7 +42,7 @@ public class Adapter_Course extends RecyclerView.Adapter<Adapter_Course.ViewHold
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         Course myCourse = mySubjectList.get(position);
         viewHolder.courseName.setText(myCourse.getClassName());
-        viewHolder.courseSignTimes.setText("签到次数"+myCourse.getSignTime());
+//        viewHolder.courseSignTimes.setText("签到次数"+myCourse.getSignTime());
     }
 
     @Override

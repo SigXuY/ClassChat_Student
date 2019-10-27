@@ -1,10 +1,12 @@
 package com.example.classchat.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -28,6 +31,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.donkingliang.labels.LabelsView;
 import com.example.classchat.Adapter.Adapter_GoodsDetail;
 import com.example.classchat.Adapter.NetworkImageHolderView;
+import com.example.classchat.Object.Object_Adress;
 import com.example.classchat.Object.Object_Item;
 import com.example.classchat.Object.Object_Item_Detail;
 import com.example.classchat.Object.Object_Pre_Sale;
@@ -35,6 +39,7 @@ import com.example.classchat.Object.Object_Stock;
 import com.example.classchat.R;
 import com.example.classchat.Util.Util_NetUtil;
 import com.example.classchat.Util.Util_ToastUtils;
+import com.example.library_cache.Cache;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,7 +106,24 @@ public class Activity_Market_GoodsDetail extends AppCompatActivity{
                     rv.setAdapter(myAdapter);
                     break;
                 case CAN_BUY:
-                    //TODO 跳转至后续购买界面
+                    //TODO 传商品
+                    List<Object_Adress> aList =  Cache.with(Activity_Market_GoodsDetail.this)
+                            .path(getCacheDir(Activity_Market_GoodsDetail.this))
+                            .getCache("AddressList", List.class);
+                    if(aList == null || aList.size() <= 0){
+                        Toast.makeText(Activity_Market_GoodsDetail.this, "请添加收货地址",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Activity_Market_GoodsDetail.this, Activity_AddressList.class);
+                        startActivity(intent);
+                    }
+                    else{
+                    Intent intent = new Intent(Activity_Market_GoodsDetail.this, Activity_NewOrder.class);
+                    List<String> paramList = new ArrayList<>();
+                    paramList.add("23码");
+                    paramList.add("红色");
+                    Object_Pre_Sale item = new Object_Pre_Sale("这是一双鞋", "1212", paramList, 4, 5, "http://106.12.105.160/authentation/18344509682_card.jpg");
+                    intent.putExtra("item", item);
+                    startActivity(intent);
+                     }
                     break;
                 case CANNOT_BUY:
                     Util_ToastUtils.showToast(Activity_Market_GoodsDetail.this, "库存不足请重新选择！");
@@ -181,7 +203,7 @@ public class Activity_Market_GoodsDetail extends AppCompatActivity{
     public void toShoppingChart(View view) {
         startActivity(new Intent(Activity_Market_GoodsDetail.this, Activity_Market_ShoppingCart.class));
     }
-//hmm
+
     public void addToShoppingCart(View view) {
         //TODO 添加商品到购物车
         List<String>paramList = new ArrayList<>();
@@ -282,7 +304,6 @@ public class Activity_Market_GoodsDetail extends AppCompatActivity{
                             if(s.getParam1().equals(paramChosen1)){
                                 if(s.getCount() != 0)
                                     exist[0] = true;
-
                             }
                         }
                         break;
@@ -291,7 +312,6 @@ public class Activity_Market_GoodsDetail extends AppCompatActivity{
                             if(s.getParam1().equals(paramChosen1) && s.getParam2().equals(paramChosen2)) {
                                 if(s.getCount() != 0)
                                     exist[0] = true;
-
                             }
                         }
                         break;
@@ -308,9 +328,11 @@ public class Activity_Market_GoodsDetail extends AppCompatActivity{
                         exist[0] = false;
                         break;
                 }
-                if(!exist[0])
-                    message.what = CANNOT_BUY;
-                else message.what = CAN_BUY;
+                //TODO
+//                if(!exist[0])
+//                    message.what = CANNOT_BUY;
+//                else message.what = CAN_BUY;
+                message.what = CAN_BUY;
                 handler.sendMessage(message);
             }
 
@@ -554,6 +576,20 @@ public class Activity_Market_GoodsDetail extends AppCompatActivity{
             Util_ToastUtils.showToast(Activity_Market_GoodsDetail.this, "库存不足，请修改购买数量！");
         if(num < stockNum[0])
             add.setEnabled(true);
+    }
+
+    /*
+     * 获得缓存地址
+     * */
+    public String getCacheDir(Context context) {
+        String cachePath;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            cachePath = context.getExternalCacheDir().getPath();
+        } else {
+            cachePath = context.getCacheDir().getPath();
+        }
+        return cachePath;
     }
 }
 

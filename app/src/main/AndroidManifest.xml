@@ -14,6 +14,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.Activity_NewOrderGroup"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Activity.Activity_ModifyAddress" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Activity.Activity_AddressList" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Activity.Activity_NewAddress" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Activity.Activity_NewOrder" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Activity.Activity_OrderList" />
+        <activity
             android:name=".Activity.Activity_ComparisonDetail"
             android:screenOrientation="portrait" />
 

@@ -21,9 +21,11 @@ import android.widget.RadioGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.classchat.Activity.Activity_AddressList;
 import com.example.classchat.Activity.Activity_Market_AddCommodity;
 import com.example.classchat.Activity.Activity_Market_MyGoods;
 import com.example.classchat.Activity.Activity_Market_ShoppingCart;
+import com.example.classchat.Activity.Activity_OrderList;
 import com.example.classchat.Adapter.Adapter_CommodityRecycleView;
 import com.example.classchat.Object.Object_Commodity;
 import com.example.classchat.Object.Object_Commodity_PriceSort;
@@ -67,14 +69,14 @@ public class Fragment_Market extends Fragment {
 
     private BoomMenuButton bmb;
     private static int[] imageResources = new int[]{
-            R.drawable.ic_market_mygoods,
+            R.drawable.address,
             R.drawable.ic_market_shoppingcart,
-            R.drawable.ic_market_addgoods
+            R.drawable.order
     };
     private static String[] textResources = new String[]{
-            "我的商品",
+            "我的地址",
             "我的购物车",
-            "发布商品"
+            "我的订单"
     };
 
     private MaterialSearchBar searchBar;
@@ -186,13 +188,13 @@ public class Fragment_Market extends Fragment {
                             Intent intent = null;
                             switch (index) {
                                 case 0:
-                                    intent = new Intent(getActivity(), Activity_Market_MyGoods.class);
+                                    intent = new Intent(getActivity(), Activity_AddressList.class);
                                     break;
                                 case 1:
                                     intent = new Intent(getActivity(), Activity_Market_ShoppingCart.class);
                                     break;
                                 case 2:
-                                    intent = new Intent(getActivity(), Activity_Market_AddCommodity.class);
+                                    intent = new Intent(getActivity(), Activity_OrderList.class);
                                     break;
                                 default:
                                     break;
